@@ -10,6 +10,7 @@
 #import "ContactTools.h"
 #import "AvatarCell.h"
 #import "OtherInfoCell.h"
+#import "iToast.h"
 
 @interface ContactDetailViewController () <UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 @end
@@ -22,6 +23,39 @@
     // Do any additional setup after loading the view.
 }
 
+// 通过addSubView的方式增加Toolbar，暂不用
+//- (UIToolbar *)bottomBar{
+//   
+//    if(!_bottomBar){
+//        CGRect frame = CGRectMake(0, self.tableView.frame.size.height-44,self.tableView.frame.size.width,44);
+//        UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:frame];
+//        UIImage *dialImage = [UIImage imageNamed:(@"dial.png")];
+//        CGSize iconSize = CGSizeMake(50.0, 50.0);
+//        dialImage = [ContactTools OriginImage:dialImage scaleToSize:iconSize];
+//        dialImage = [dialImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//        UIBarButtonItem *dialItem = [[UIBarButtonItem alloc] initWithImage:dialImage style:UIBarButtonItemStylePlain target:self action:@selector(dialNumber:)];
+//
+//        UIImage *unStaredImage = [UIImage imageNamed:(@"unstared.png")];
+//        unStaredImage = [ContactTools OriginImage:unStaredImage scaleToSize:iconSize];
+//        unStaredImage = [unStaredImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    
+//        UIImage *staredImage = [UIImage imageNamed:(@"stared.png")];
+//        staredImage = [ContactTools OriginImage:staredImage scaleToSize:iconSize];
+//        staredImage = [staredImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    
+//        UIBarButtonItem *favItem;
+//        if(self.item.isStared){
+//            favItem = [[UIBarButtonItem alloc] initWithImage:staredImage style:UIBarButtonItemStyleDone target:self action:@selector(starContact)];
+//        }else{
+//            favItem = [[UIBarButtonItem alloc] initWithImage:unStaredImage style:UIBarButtonItemStyleDone target:self action:@selector(starContact)];
+//        }
+//        UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+//        NSArray *arrayItem = [NSArray arrayWithObjects:dialItem,flexible,favItem,nil];
+//        [toolBar setItems:arrayItem];
+//        _bottomBar = toolBar;
+//    }
+//    return _bottomBar;
+//}
 - (instancetype)init{
     
     self = [super initWithStyle:UITableViewStylePlain];
@@ -30,36 +64,48 @@
         [self.tableView registerNib:avatarNib forCellReuseIdentifier:@"avatar"];
         UINib *otherInfoNib = [UINib nibWithNibName:@"OtherInfoCell" bundle:nil];
         [self.tableView registerNib:otherInfoNib forCellReuseIdentifier:@"otherInfo"];
+
         // 不显示分割线
 //        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
         //不显示多余的空行
         self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
+        // 隐藏tabBar
         self.hidesBottomBarWhenPushed = YES;
 
-        CGRect frame = CGRectMake(0, self.tableView.frame.size.height-88,self.tableView.frame.size.width,44);
-        UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:frame];
-//        UIBarButtonItem *dialItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(dialNumber:)];
-//        UIBarButtonItem *favItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(editEventClick)];
-        UIImage *dialImage = [UIImage imageNamed:(@"dial.png")];
+        // 初始化Toolbar的图标
         CGSize iconSize = CGSizeMake(50.0, 50.0);
-        dialImage = [ContactTools OriginImage:dialImage scaleToSize:iconSize];
-        dialImage = [dialImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        UIBarButtonItem *dialItem = [[UIBarButtonItem alloc] initWithImage:dialImage style:UIBarButtonItemStylePlain target:self action:@selector(dialNumber:)];
-        UIImage *favImage = [UIImage imageNamed:(@"unstared.png")];
-        favImage = [ContactTools OriginImage:favImage scaleToSize:iconSize];
-        favImage = [favImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        UIBarButtonItem *favItem = [[UIBarButtonItem alloc] initWithImage:favImage style:UIBarButtonItemStyleDone target:self action:@selector(starContact:)];
-        UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        NSArray *arrayItem = [NSArray arrayWithObjects:dialItem,flexible,favItem,nil];
-        [toolBar setItems:arrayItem];
-        [self.tableView addSubview:toolBar];
+        self.dialImage = [UIImage imageNamed:(@"dial.png")];
+        self.dialImage = [ContactTools OriginImage:self.dialImage scaleToSize:iconSize];
+        self.dialImage = [self.dialImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+        self.unStaredImage = [UIImage imageNamed:(@"unstared.png")];
+        self.unStaredImage = [ContactTools OriginImage:self.unStaredImage scaleToSize:iconSize];
+        self.unStaredImage = [self.unStaredImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+        self.staredImage = [UIImage imageNamed:(@"stared.png")];
+        self.staredImage = [ContactTools OriginImage:self.staredImage scaleToSize:iconSize];
+        self.staredImage = [self.staredImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+        self.flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
 
     }
     return self;
 
 }
-
+- (void)starContact{
+    self.item.isStared = !self.item.isStared;
+    [self renewToolbar];
+    if(self.item.isStared){
+        [[[iToast makeText:NSLocalizedString(@"  收藏成功！ ", @"")]
+      setGravity:iToastGravityBottom] show];
+    }else{
+        [[[iToast makeText:NSLocalizedString(@"  取消收藏成功! ", @"")]
+          setGravity:iToastGravityBottom] show];
+        
+    }
+}
 - (void)dialNumber:(BOOL) isNow{
     if(isNow){
         NSString *dialURL = [NSString stringWithFormat:@"tel://%@",self.item.phone];
@@ -71,7 +117,24 @@
     }
 }
 
+// 刷新toolbar，目前用于改变收藏图标
+- (void)renewToolbar{
+    
+    UIBarButtonItem *dialItem = [[UIBarButtonItem alloc] initWithImage:self.dialImage style:UIBarButtonItemStylePlain target:self action:@selector(dialNumber:)];
+    
+    UIBarButtonItem *favItem;
+    if(self.item.isStared){
+        favItem = [[UIBarButtonItem alloc] initWithImage:self.staredImage style:UIBarButtonItemStyleDone target:self action:@selector(starContact)];
+    }else{
+        favItem = [[UIBarButtonItem alloc] initWithImage:self.unStaredImage style:UIBarButtonItemStyleDone target:self action:@selector(starContact)];
+    }
+    NSArray *arrayItem = [NSArray arrayWithObjects:dialItem,self.flexible,favItem,nil];
+//    [self.navigationController.toolbar setItems:arrayItem];
+    [self setToolbarItems:arrayItem];
+    [self.navigationController.toolbar setNeedsLayout];
+    return;
 
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -81,18 +144,14 @@
     
     [super viewWillAppear:animated];
     self.navigationItem.title = self.item.name;
+    self.navigationController.toolbarHidden = NO;
+    [self renewToolbar];
+    
+}
 
-//    ContactItem *item = self.item;
-//    self.nameLabel.text = item.name;
-//    self.phoneLabel.text = item.phone;
-//    self.popoLabel.text = item.popo;
-//    self.qqLabel.text = item.qq;
-//    self.extNumberLabel.text = item.extNumber;
-////    self.levelLabel.text = item.level;
-//    self.managerLabel.text =  item.manager;
-//    [ContactTools roundImageView:self.avatarImage];
-//    self.avatarImage.image = item.avatar;
-////    [self.infoTable reloadData];
+- (void)viewDidAppear:(BOOL)animated{
+    // 通过addSubView的方式增加toolbar
+//    [self.view.superview addSubview:self.bottomBar];
 }
 
 

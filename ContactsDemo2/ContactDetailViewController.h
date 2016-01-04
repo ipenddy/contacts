@@ -18,4 +18,12 @@
 @property (nonatomic,strong) UIActionSheet *emailActionSheet;
 @property (nonatomic,strong) UIActionSheet *qqActionSheet;
 
+// 通过addSubView的方式增加toolbar，暂不用
+//@property (nonatomic,strong) UIToolbar *bottomBar;
+
+// Toolbar上的图标
+@property (nonatomic,strong) UIImage *dialImage;
+@property (nonatomic,strong) UIImage *staredImage;
+@property (nonatomic,strong) UIImage *unStaredImage;
+@property (nonatomic,strong) UIBarButtonItem *flexible;
 @end

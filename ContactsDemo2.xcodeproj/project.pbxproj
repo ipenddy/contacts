@@ -32,6 +32,7 @@
 		3AB475961C3A156A00EA461A /* stared@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB475901C3A156A00EA461A /* stared@3x.png */; };
 		3AB475971C3A156A00EA461A /* unstared@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB475911C3A156A00EA461A /* unstared@2x.png */; };
 		3AB475981C3A156A00EA461A /* unstared@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB475921C3A156A00EA461A /* unstared@3x.png */; };
+		3AB4759C1C3A3DC900EA461A /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4759B1C3A3DC900EA461A /* iToast.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,8 @@
 		3AB475901C3A156A00EA461A /* stared@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stared@3x.png"; sourceTree = "<group>"; };
 		3AB475911C3A156A00EA461A /* unstared@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unstared@2x.png"; sourceTree = "<group>"; };
 		3AB475921C3A156A00EA461A /* unstared@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unstared@3x.png"; sourceTree = "<group>"; };
+		3AB4759A1C3A3DC900EA461A /* iToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
+		3AB4759B1C3A3DC900EA461A /* iToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iToast.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +145,7 @@
 		3A9469531C3762FC0001792A /* ContactsDemo2 */ = {
 			isa = PBXGroup;
 			children = (
+				3AB475991C3A3DB600EA461A /* Tools */,
 				3AB4758C1C3A156A00EA461A /* icons */,
 				3A9469B81C3941580001792A /* Model */,
 				3A9469B71C3941430001792A /* ContactDetail */,
@@ -153,8 +157,6 @@
 				3A9469621C3762FC0001792A /* LaunchScreen.storyboard */,
 				3A9469651C3762FC0001792A /* Info.plist */,
 				3A9469541C3762FC0001792A /* Supporting Files */,
-				3A9469951C3802880001792A /* ContactTools.h */,
-				3A9469961C3802880001792A /* ContactTools.m */,
 			);
 			path = ContactsDemo2;
 			sourceTree = "<group>";
@@ -243,6 +245,17 @@
 				3AB475921C3A156A00EA461A /* unstared@3x.png */,
 			);
 			path = icons;
+			sourceTree = "<group>";
+		};
+		3AB475991C3A3DB600EA461A /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4759A1C3A3DC900EA461A /* iToast.h */,
+				3AB4759B1C3A3DC900EA461A /* iToast.m */,
+				3A9469951C3802880001792A /* ContactTools.h */,
+				3A9469961C3802880001792A /* ContactTools.m */,
+			);
+			name = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,6 +406,7 @@
 				3A9469941C37CF910001792A /* ContactItem.m in Sources */,
 				3A94698C1C3764380001792A /* ContactsStore.m in Sources */,
 				3A9469B11C3916A70001792A /* AvatarCell.m in Sources */,
+				3AB4759C1C3A3DC900EA461A /* iToast.m in Sources */,
 				3A94699A1C38B94D0001792A /* ContactDetailViewController.m in Sources */,
 				3A9469561C3762FC0001792A /* main.m in Sources */,
 			);

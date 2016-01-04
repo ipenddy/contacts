@@ -40,6 +40,7 @@
         item1.popo = @"zhangsan@corp.netease.com";
         item1.qq = @"12121";
         item1.extNumber = @"89241";
+        item1.isStared = NO;
 
         ContactItem *item2 = [[ContactItem alloc]init];
         item2.ldap = @"lisi";
@@ -52,13 +53,13 @@
         item2.popo = @"lisi@corp.netease.com";
         item2.qq = @"12122";
         item2.extNumber = @"89242";
+        item1.isStared = NO;
 
         if(!self.privateDictionary){
             self.privateDictionary = [[NSMutableDictionary alloc]init];
         }
         [self.privateDictionary setObject:item1 forKey:item1.ldap];
         [self.privateDictionary setObject:item2 forKey:item2.ldap];
-        NSLog(@"shareStore init,the dictory length is %d",[self.privateDictionary count]);
     
 //        if(!self.privateItems){
 //            self.privateItems = [[NSMutableArray alloc]init];

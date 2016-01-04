@@ -22,4 +22,6 @@
 @property (nonatomic,strong) NSString *qq;
 @property (nonatomic,strong) NSString *extNumber;
 
+@property (nonatomic) BOOL isStared;
+
 @end
