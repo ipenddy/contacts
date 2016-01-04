@@ -13,4 +13,5 @@
 
 + (NSString *)firstCharactor:(NSString *)aString;
 + (void)roundImageView:(UIImageView *)imageView;
++ (UIImage *)OriginImage:(UIImage *)image scaleToSize:(CGSize)size;
 @end

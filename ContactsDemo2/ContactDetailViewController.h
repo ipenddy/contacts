@@ -9,18 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "ContactItem.h"
 
-@interface ContactDetailViewController : UIViewController
-
-
-@property (nonatomic,weak) IBOutlet UILabel *phoneLabel;
-@property (nonatomic,weak) IBOutlet UILabel *managerLabel;
-@property (nonatomic,weak) IBOutlet UILabel *nameLabel;
-@property (nonatomic,weak) IBOutlet UILabel *popoLabel;
-@property (nonatomic,weak) IBOutlet UILabel *extNumberLabel;
-//@property (nonatomic,weak) IBOutlet UILabel *levelLabel;
-@property (nonatomic,weak) IBOutlet UILabel *qqLabel;
-@property (nonatomic,weak) IBOutlet UIImageView *avatarImage;
+@interface ContactDetailViewController : UITableViewController
 
 @property (nonatomic,strong) ContactItem *item;
+
+@property (nonatomic,strong) UIActionSheet *phoneActionSheet;
+@property (nonatomic,strong) UIActionSheet *popoActionSheet;
+@property (nonatomic,strong) UIActionSheet *emailActionSheet;
+@property (nonatomic,strong) UIActionSheet *qqActionSheet;
 
 @end

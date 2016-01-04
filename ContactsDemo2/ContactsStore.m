@@ -9,7 +9,9 @@
 #import "ContactsStore.h"
 #import "ContactItem.h"
 @interface ContactsStore()
-@property (nonatomic,strong) NSMutableArray *privateItems;
+//@property (nonatomic,strong) NSMutableArray *privateItems;
+@property (nonatomic,strong) NSMutableDictionary *privateDictionary;
+@property (nonatomic,strong) NSMutableArray *privateArray;
 @end
 @implementation ContactsStore
 
@@ -31,7 +33,7 @@
         item1.ldap = @"zhangsan";
         item1.name = @"张三";
         item1.email = @"zhangsan@gmail.com";
-        item1.phone = @"18012345677";
+        item1.phone = @"13800138000";
         item1.manager = @"river";
         item1.avatar = [UIImage imageNamed:@"wangpd.jpg"];
         item1.level = @"27";
@@ -43,29 +45,44 @@
         item2.ldap = @"lisi";
         item2.name = @"李四";
         item2.email = @"lisi@gmail.com";
-        item2.phone = @"18012345678";
+        item2.phone = @"13800138000";
         item2.manager = @"sky";
         item2.avatar = [UIImage imageNamed:@"tianzhen.jpg"];
         item2.level = @"26";
         item2.popo = @"lisi@corp.netease.com";
         item2.qq = @"12122";
         item2.extNumber = @"89242";
-        
-        
 
-        if(!self.privateItems){
-            self.privateItems = [[NSMutableArray alloc]init];
+        if(!self.privateDictionary){
+            self.privateDictionary = [[NSMutableDictionary alloc]init];
         }
-        [self.privateItems addObject:item1];
-        [self.privateItems addObject:item2];
-        NSLog(@"shareStore init,the array length is %d",[self.privateItems count]);
-        
+        [self.privateDictionary setObject:item1 forKey:item1.ldap];
+        [self.privateDictionary setObject:item2 forKey:item2.ldap];
+        NSLog(@"shareStore init,the dictory length is %d",[self.privateDictionary count]);
+    
+//        if(!self.privateItems){
+//            self.privateItems = [[NSMutableArray alloc]init];
+//        }
+//        [self.privateItems addObject:item1];
+//        [self.privateItems addObject:item2];
+//        NSLog(@"shareStore init,the array length is %d",[self.privateItems count]);
+        if(!self.privateArray){
+            self.privateArray = [[NSMutableArray alloc]init];
+        }
+        NSArray *keys = [self.privateDictionary allKeys];
+        NSLog(@"the count of key is %d",[keys count]);
+        for(NSString *key in keys){
+            [self.privateArray addObject:self.privateDictionary[key]];
+        }
+
     }
     return self;
 }
 
 - (NSArray *)allItems{
-    return self.privateItems;
+
+    return self.privateArray;
+//    return self.privateItems;
 }
 
 

@@ -20,10 +20,18 @@
 		3A9469941C37CF910001792A /* ContactItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9469931C37CF910001792A /* ContactItem.m */; };
 		3A9469971C3802880001792A /* ContactTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9469961C3802880001792A /* ContactTools.m */; };
 		3A94699A1C38B94D0001792A /* ContactDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9469991C38B94D0001792A /* ContactDetailViewController.m */; };
-		3A94699C1C38B9800001792A /* ContactDetailViewController.xib.bak in Resources */ = {isa = PBXBuildFile; fileRef = 3A94699B1C38B9800001792A /* ContactDetailViewController.xib.bak */; };
 		3A94699F1C38BB7E0001792A /* wangpd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A94699E1C38BB7E0001792A /* wangpd.jpg */; };
 		3A9469A11C38C0920001792A /* tianzhen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A9469A01C38C0920001792A /* tianzhen.jpg */; };
-		3A9469A31C38D6860001792A /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9469A21C38D6860001792A /* DetailViewController.xib */; };
+		3A9469AC1C3912E10001792A /* AvatarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9469AB1C3912E10001792A /* AvatarCell.xib */; };
+		3A9469AE1C3914100001792A /* OtherInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9469AD1C3914100001792A /* OtherInfoCell.xib */; };
+		3A9469B11C3916A70001792A /* AvatarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9469B01C3916A70001792A /* AvatarCell.m */; };
+		3A9469B41C39171F0001792A /* OtherInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9469B31C39171F0001792A /* OtherInfoCell.m */; };
+		3AB475931C3A156A00EA461A /* dial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4758D1C3A156A00EA461A /* dial@2x.png */; };
+		3AB475941C3A156A00EA461A /* dial@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4758E1C3A156A00EA461A /* dial@3x.png */; };
+		3AB475951C3A156A00EA461A /* stared@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4758F1C3A156A00EA461A /* stared@2x.png */; };
+		3AB475961C3A156A00EA461A /* stared@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB475901C3A156A00EA461A /* stared@3x.png */; };
+		3AB475971C3A156A00EA461A /* unstared@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB475911C3A156A00EA461A /* unstared@2x.png */; };
+		3AB475981C3A156A00EA461A /* unstared@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB475921C3A156A00EA461A /* unstared@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,10 +78,20 @@
 		3A9469961C3802880001792A /* ContactTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTools.m; sourceTree = "<group>"; };
 		3A9469981C38B94D0001792A /* ContactDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetailViewController.h; sourceTree = "<group>"; };
 		3A9469991C38B94D0001792A /* ContactDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetailViewController.m; sourceTree = "<group>"; };
-		3A94699B1C38B9800001792A /* ContactDetailViewController.xib.bak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ContactDetailViewController.xib.bak; sourceTree = "<group>"; };
 		3A94699E1C38BB7E0001792A /* wangpd.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wangpd.jpg; sourceTree = "<group>"; };
 		3A9469A01C38C0920001792A /* tianzhen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tianzhen.jpg; sourceTree = "<group>"; };
-		3A9469A21C38D6860001792A /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		3A9469AB1C3912E10001792A /* AvatarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AvatarCell.xib; sourceTree = "<group>"; };
+		3A9469AD1C3914100001792A /* OtherInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherInfoCell.xib; sourceTree = "<group>"; };
+		3A9469AF1C3916A70001792A /* AvatarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarCell.h; sourceTree = "<group>"; };
+		3A9469B01C3916A70001792A /* AvatarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarCell.m; sourceTree = "<group>"; };
+		3A9469B21C39171F0001792A /* OtherInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherInfoCell.h; sourceTree = "<group>"; };
+		3A9469B31C39171F0001792A /* OtherInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherInfoCell.m; sourceTree = "<group>"; };
+		3AB4758D1C3A156A00EA461A /* dial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dial@2x.png"; sourceTree = "<group>"; };
+		3AB4758E1C3A156A00EA461A /* dial@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dial@3x.png"; sourceTree = "<group>"; };
+		3AB4758F1C3A156A00EA461A /* stared@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stared@2x.png"; sourceTree = "<group>"; };
+		3AB475901C3A156A00EA461A /* stared@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stared@3x.png"; sourceTree = "<group>"; };
+		3AB475911C3A156A00EA461A /* unstared@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unstared@2x.png"; sourceTree = "<group>"; };
+		3AB475921C3A156A00EA461A /* unstared@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unstared@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,26 +142,17 @@
 		3A9469531C3762FC0001792A /* ContactsDemo2 */ = {
 			isa = PBXGroup;
 			children = (
+				3AB4758C1C3A156A00EA461A /* icons */,
+				3A9469B81C3941580001792A /* Model */,
+				3A9469B71C3941430001792A /* ContactDetail */,
+				3A9469B61C39411E0001792A /* Contacts */,
 				3A94699D1C38BB7E0001792A /* avatar */,
 				3A9469571C3762FC0001792A /* AppDelegate.h */,
 				3A9469581C3762FC0001792A /* AppDelegate.m */,
-				3A94698D1C3766020001792A /* ContactsTableViewController.h */,
-				3A94698E1C3766020001792A /* ContactsTableViewController.m */,
-				3A9469981C38B94D0001792A /* ContactDetailViewController.h */,
-				3A9469991C38B94D0001792A /* ContactDetailViewController.m */,
-				3A94699B1C38B9800001792A /* ContactDetailViewController.xib.bak */,
-				3A9469A21C38D6860001792A /* DetailViewController.xib */,
 				3A9469601C3762FC0001792A /* Assets.xcassets */,
 				3A9469621C3762FC0001792A /* LaunchScreen.storyboard */,
 				3A9469651C3762FC0001792A /* Info.plist */,
 				3A9469541C3762FC0001792A /* Supporting Files */,
-				3A9469921C37CF910001792A /* ContactItem.h */,
-				3A9469931C37CF910001792A /* ContactItem.m */,
-				3A9469871C3763B40001792A /* ContactItemCell.h */,
-				3A9469881C3763B40001792A /* ContactItemCell.m */,
-				3A9469901C3766A30001792A /* ContactItemCell.xib */,
-				3A94698A1C3764380001792A /* ContactsStore.h */,
-				3A94698B1C3764380001792A /* ContactsStore.m */,
 				3A9469951C3802880001792A /* ContactTools.h */,
 				3A9469961C3802880001792A /* ContactTools.m */,
 			);
@@ -183,6 +192,57 @@
 				3A94699E1C38BB7E0001792A /* wangpd.jpg */,
 			);
 			path = avatar;
+			sourceTree = "<group>";
+		};
+		3A9469B61C39411E0001792A /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				3A94698D1C3766020001792A /* ContactsTableViewController.h */,
+				3A94698E1C3766020001792A /* ContactsTableViewController.m */,
+			);
+			name = Contacts;
+			sourceTree = "<group>";
+		};
+		3A9469B71C3941430001792A /* ContactDetail */ = {
+			isa = PBXGroup;
+			children = (
+				3A9469981C38B94D0001792A /* ContactDetailViewController.h */,
+				3A9469991C38B94D0001792A /* ContactDetailViewController.m */,
+				3A9469AB1C3912E10001792A /* AvatarCell.xib */,
+				3A9469AF1C3916A70001792A /* AvatarCell.h */,
+				3A9469B01C3916A70001792A /* AvatarCell.m */,
+				3A9469AD1C3914100001792A /* OtherInfoCell.xib */,
+				3A9469B21C39171F0001792A /* OtherInfoCell.h */,
+				3A9469B31C39171F0001792A /* OtherInfoCell.m */,
+			);
+			name = ContactDetail;
+			sourceTree = "<group>";
+		};
+		3A9469B81C3941580001792A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3A9469921C37CF910001792A /* ContactItem.h */,
+				3A9469931C37CF910001792A /* ContactItem.m */,
+				3A9469871C3763B40001792A /* ContactItemCell.h */,
+				3A9469881C3763B40001792A /* ContactItemCell.m */,
+				3A9469901C3766A30001792A /* ContactItemCell.xib */,
+				3A94698A1C3764380001792A /* ContactsStore.h */,
+				3A94698B1C3764380001792A /* ContactsStore.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3AB4758C1C3A156A00EA461A /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4758D1C3A156A00EA461A /* dial@2x.png */,
+				3AB4758E1C3A156A00EA461A /* dial@3x.png */,
+				3AB4758F1C3A156A00EA461A /* stared@2x.png */,
+				3AB475901C3A156A00EA461A /* stared@3x.png */,
+				3AB475911C3A156A00EA461A /* unstared@2x.png */,
+				3AB475921C3A156A00EA461A /* unstared@3x.png */,
+			);
+			path = icons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,11 +348,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A9469AE1C3914100001792A /* OtherInfoCell.xib in Resources */,
+				3A9469AC1C3912E10001792A /* AvatarCell.xib in Resources */,
+				3AB475971C3A156A00EA461A /* unstared@2x.png in Resources */,
+				3AB475941C3A156A00EA461A /* dial@3x.png in Resources */,
+				3AB475931C3A156A00EA461A /* dial@2x.png in Resources */,
 				3A9469911C3766A30001792A /* ContactItemCell.xib in Resources */,
 				3A9469641C3762FC0001792A /* LaunchScreen.storyboard in Resources */,
-				3A9469A31C38D6860001792A /* DetailViewController.xib in Resources */,
-				3A94699C1C38B9800001792A /* ContactDetailViewController.xib.bak in Resources */,
+				3AB475981C3A156A00EA461A /* unstared@3x.png in Resources */,
 				3A94699F1C38BB7E0001792A /* wangpd.jpg in Resources */,
+				3AB475961C3A156A00EA461A /* stared@3x.png in Resources */,
+				3AB475951C3A156A00EA461A /* stared@2x.png in Resources */,
 				3A9469A11C38C0920001792A /* tianzhen.jpg in Resources */,
 				3A9469611C3762FC0001792A /* Assets.xcassets in Resources */,
 			);
@@ -321,10 +387,12 @@
 			files = (
 				3A9469971C3802880001792A /* ContactTools.m in Sources */,
 				3A9469891C3763B40001792A /* ContactItemCell.m in Sources */,
+				3A9469B41C39171F0001792A /* OtherInfoCell.m in Sources */,
 				3A9469591C3762FC0001792A /* AppDelegate.m in Sources */,
 				3A94698F1C3766020001792A /* ContactsTableViewController.m in Sources */,
 				3A9469941C37CF910001792A /* ContactItem.m in Sources */,
 				3A94698C1C3764380001792A /* ContactsStore.m in Sources */,
+				3A9469B11C3916A70001792A /* AvatarCell.m in Sources */,
 				3A94699A1C38B94D0001792A /* ContactDetailViewController.m in Sources */,
 				3A9469561C3762FC0001792A /* main.m in Sources */,
 			);
@@ -542,6 +610,7 @@
 				3A9469801C3762FC0001792A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3A9469811C3762FC0001792A /* Build configuration list for PBXNativeTarget "ContactsDemo2Tests" */ = {
 			isa = XCConfigurationList;
@@ -550,6 +619,7 @@
 				3A9469831C3762FC0001792A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3A9469841C3762FC0001792A /* Build configuration list for PBXNativeTarget "ContactsDemo2UITests" */ = {
 			isa = XCConfigurationList;
@@ -558,6 +628,7 @@
 				3A9469861C3762FC0001792A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

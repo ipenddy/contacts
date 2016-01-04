@@ -22,6 +22,8 @@
 
 - (instancetype) init{
     self = [super initWithStyle:UITableViewStylePlain];
+    //不显示多余的空行
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];    
     return self;
 }
 
@@ -66,9 +68,7 @@
 
     
     cell.nameLabel.text = item.name;
-    cell.ldapLabel.text = item.ldap;
     cell.phoneLabel.text = item.phone;
-    cell.managerLabel.text = item.manager;
     [ContactTools roundImageView:cell.avatarImage];
     cell.avatarImage.image = item.avatar;
     
@@ -77,7 +77,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    ContactDetailViewController *detailViewController = [[ContactDetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];
+//    ContactDetailViewController *detailViewController = [[ContactDetailViewController alloc]initWithNibName:@"ContactDetailViewController" bundle:nil];
+    ContactDetailViewController *detailViewController = [[ContactDetailViewController alloc]init];
     
     NSArray *items = [[ContactsStore sharedStore]allItems];
     ContactItem *selectedItem = items[indexPath.row];
@@ -87,8 +88,16 @@
     
     // 将创建的BNRDetailViewController对象压入UINavigationController对象的栈
     [self.navigationController pushViewController:detailViewController animated:YES];
+
+    // 避免一直保持在选中状态
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        
     
-    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    return 60;
 }
 
 
