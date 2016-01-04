@@ -149,6 +149,11 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    //  隐藏toolbar，避免返回后仍然显示
+    self.navigationController.toolbarHidden = YES;
+}
+
 - (void)viewDidAppear:(BOOL)animated{
     // 通过addSubView的方式增加toolbar
 //    [self.view.superview addSubview:self.bottomBar];
