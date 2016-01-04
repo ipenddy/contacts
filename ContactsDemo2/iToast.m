@@ -240,7 +240,7 @@ static iToastSettings *sharedSettings = nil;
 	v.alpha = 1;
 	[UIView commitAnimations];
 	
-//	view = [v retain];
+    view = v;
 	
 	[v addTarget:self action:@selector(hideToast:) forControlEvents:UIControlEventTouchDown];
 }
@@ -427,7 +427,7 @@ static iToastSettings *sharedSettings = nil;
 		sharedSettings = [iToastSettings new];
 		sharedSettings.gravity = iToastGravityCenter;
 		sharedSettings.duration = iToastDurationShort;
-		sharedSettings.fontSize = 16.0;
+		sharedSettings.fontSize = 18.0;
 		sharedSettings.useShadow = YES;
 		sharedSettings.cornerRadius = 5.0;
 		sharedSettings.bgRed = 0;

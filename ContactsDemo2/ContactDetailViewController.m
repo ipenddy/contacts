@@ -98,11 +98,11 @@
     self.item.isStared = !self.item.isStared;
     [self renewToolbar];
     if(self.item.isStared){
-        [[[iToast makeText:NSLocalizedString(@"  收藏成功！ ", @"")]
-      setGravity:iToastGravityBottom] show];
+        [[[[iToast makeText:NSLocalizedString(@"  收藏成功！ ", @"")]
+      setGravity:iToastGravityBottom] setDuration:iToastDurationShort] show];
     }else{
-        [[[iToast makeText:NSLocalizedString(@"  取消收藏成功! ", @"")]
-          setGravity:iToastGravityBottom] show];
+        [[[[iToast makeText:NSLocalizedString(@"  取消收藏成功! ", @"")]
+          setGravity:iToastGravityBottom] setDuration:iToastDurationShort] show];
         
     }
 }
@@ -150,7 +150,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-    //  隐藏toolbar，避免返回后仍然显示
+    // 隐藏toolbar，避免返回后仍然显示
     self.navigationController.toolbarHidden = YES;
 }
 
