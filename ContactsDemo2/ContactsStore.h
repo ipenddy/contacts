@@ -7,12 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ContactTools.h"
+#import "ContactsPinyin.h"
 
 @interface ContactsStore : NSObject
 
 + (instancetype)sharedStore;
+- (NSArray *)allContacts;
+- (NSArray *)staredContacts;
+- (NSArray *)contactsArray;
+- (void)renewStarContact:(ContactItem *)renewContact;
 
-@property (nonatomic,strong) NSArray *allItems;
+@property (nonatomic,strong) NSMutableDictionary *allContactsDictionary;
+@property (nonatomic,strong) NSMutableArray *allContactsArray;
+@property (nonatomic,strong) NSMutableArray *allStaredContactsArray;
+@property (nonatomic,strong) NSMutableArray *groupedContactsArray;
+
+
 
 
 @end

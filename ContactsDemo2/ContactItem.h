@@ -21,6 +21,9 @@
 @property (nonatomic,strong) NSString *popo;
 @property (nonatomic,strong) NSString *qq;
 @property (nonatomic,strong) NSString *extNumber;
+@property (nonatomic,strong) NSString *pinyin;
+@property (nonatomic,strong) NSString *firstchar;
+@property (nonatomic,strong) NSString *abbName;
 
 @property (nonatomic) BOOL isStared;
 

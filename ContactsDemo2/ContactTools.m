@@ -12,19 +12,53 @@
 
 + (NSString *)firstCharactor:(NSString *)aString
 {
+//    //转成了可变字符串
+//    NSMutableString *str = [NSMutableString stringWithString:aString];
+//    //先转换为带声调的拼音
+//    CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformMandarinLatin,NO);
+//    //再转换为不带声调的拼音
+//    CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformStripDiacritics,NO);
+//
+//    //再转为不带空格的拼音
+//    NSString *pinyin = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    NSString *capPinyin = [pinyin capitalizedString];
+    
+    return [[self pinyinOfString:aString] substringToIndex:1];
+}
+
++ (NSString *)abbOfName:(NSString *)aString
+{
     //转成了可变字符串
     NSMutableString *str = [NSMutableString stringWithString:aString];
     //先转换为带声调的拼音
     CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformMandarinLatin,NO);
-    NSLog(@"%@", str);
     //再转换为不带声调的拼音
     CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformStripDiacritics,NO);
-    NSLog(@"%@", str);
-    //先传化为拼音
-    NSString *pinYin = [str capitalizedString];
-    //获取首字母
-    return [pinYin substringToIndex:1];
+    
+    NSArray *array = [str componentsSeparatedByString:@" "];
+    NSString *abb = @"";
+    for(NSString *ch in array){
+        abb = [NSString stringWithFormat:@"%@%@",abb,[ch substringToIndex:1]];
+    }
+    return [abb capitalizedString];
+                     
 }
+
++ (NSString *)pinyinOfString:(NSString *)aString
+{
+    //转成了可变字符串
+    NSMutableString *str = [NSMutableString stringWithString:aString];
+    //先转换为带声调的拼音
+    CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformMandarinLatin,NO);
+    //再转换为不带声调的拼音
+    CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformStripDiacritics,NO);
+    
+    //再转为不带空格的拼音
+    NSString *pinyin = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *capPinyin = [pinyin capitalizedString];
+    return capPinyin;
+}
+
 
 + (void)roundImageView:(UIImageView *)imageView{
     

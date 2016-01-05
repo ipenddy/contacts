@@ -12,6 +12,8 @@
 @interface ContactTools : NSObject
 
 + (NSString *)firstCharactor:(NSString *)aString;
++ (NSString *)pinyinOfString:(NSString *)aString;
++ (NSString *)abbOfName:(NSString *)aString;
 + (void)roundImageView:(UIImageView *)imageView;
 + (UIImage *)OriginImage:(UIImage *)image scaleToSize:(CGSize)size;
 @end

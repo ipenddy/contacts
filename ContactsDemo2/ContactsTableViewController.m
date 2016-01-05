@@ -13,8 +13,11 @@
 #import "ContactTools.h"
 #import "ContactDetailViewController.h"
 
-@interface ContactsTableViewController ()
+@interface ContactsTableViewController () <UISearchBarDelegate, UISearchResultsUpdating>
 
+@property (nonatomic,strong) UISearchController *searchController;
+
+@property (nonatomic,strong)NSMutableArray * searchResult;
 @end
 
 @implementation ContactsTableViewController
@@ -36,12 +39,24 @@
     UINib *nib = [UINib nibWithNibName:@"ContactItemCell" bundle:nil];
     // 通过UINib对象注册相应的NIB文件
     [self.tableView registerNib:nib forCellReuseIdentifier:@"ContactItemCell"];
+
+}
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    // 增加searchController
+    _searchController = [[UISearchController alloc]initWithSearchResultsController:nil];
+    _searchController.searchResultsUpdater = self;
+    _searchController.dimsBackgroundDuringPresentation = NO;
+    _searchController.searchBar.delegate = self;
+    _searchController.searchBar.placeholder = @"搜索联系人...";
+    [_searchController.searchBar sizeToFit];
+
+    // 把searchBar放到tableview上方
+    self.tableView.tableHeaderView = _searchController.searchBar;
+    self.definesPresentationContext = YES;
+
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,36 +67,79 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[[ContactsStore sharedStore] allItems] count];
+    if(self.searchController.active){
+        NSLog(@"row is %d",[self.searchResult count] );
+        return [self.searchResult count];
+    }else{
+       NSDictionary *dict = [[ContactsStore sharedStore]allContacts][section];
+       NSMutableArray *array = dict[@"content"];
+       return [array count];
+   }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if(self.searchController.active){
+        NSLog(@"enter section");
+        return 1;
+    }else{
+       return [[[ContactsStore sharedStore] allContacts] count];
+   }
+
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    ContactItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactItemCell" forIndexPath:indexPath];
-    NSArray *items = [[ContactsStore sharedStore]allItems];
-    ContactItem *item = items[indexPath.row];
-    
-//    NSString *fc = [[NSString alloc]init];
-//    fc = [ContactTools firstCharactor:item.name];
-//    NSLog(@"The item is %@",fc);
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    ContactItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactItemCell" forIndexPath:indexPath];
+    
+    if(self.searchController.active){
+        
+        ContactItem *item = self.searchResult[indexPath.row];
+        
+        cell.nameLabel.text = item.name;
+        cell.phoneLabel.text = item.phone;
+        [ContactTools roundImageView:cell.avatarImage];
+        cell.avatarImage.image = item.avatar;
+    }else{
+
+    NSDictionary *dict =[[ContactsStore sharedStore] allContacts][indexPath.section];
+    NSMutableArray *array = dict[@"content"];
+    ContactItem *item = array[indexPath.row];
+    
     
     cell.nameLabel.text = item.name;
     cell.phoneLabel.text = item.phone;
     [ContactTools roundImageView:cell.avatarImage];
     cell.avatarImage.image = item.avatar;
-    
+
+
+      
+  }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-//    ContactDetailViewController *detailViewController = [[ContactDetailViewController alloc]initWithNibName:@"ContactDetailViewController" bundle:nil];
+
     ContactDetailViewController *detailViewController = [[ContactDetailViewController alloc]init];
-    
-    NSArray *items = [[ContactsStore sharedStore]allItems];
-    ContactItem *selectedItem = items[indexPath.row];
+
+    if(self.searchController.active){
+        ContactItem *selectedItem = self.searchResult[indexPath.row];
+        
+        // 将选中的BNRItem对象付给DetailViewController的对象
+        detailViewController.item = selectedItem;
+        
+        // 将创建的BNRDetailViewController对象压入UINavigationController对象的栈
+        [self.navigationController pushViewController:detailViewController animated:YES];
+        
+        // 避免一直保持在选中状态
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }else{
+
+    NSDictionary *dict =[[ContactsStore sharedStore] allContacts][indexPath.section];
+    NSMutableArray *array = dict[@"content"];
+    ContactItem *selectedItem = array[indexPath.row];
     
     // 将选中的BNRItem对象付给DetailViewController的对象
     detailViewController.item = selectedItem;
@@ -91,8 +149,25 @@
 
     // 避免一直保持在选中状态
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-        
+  }
     
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSDictionary *dict = [[ContactsStore sharedStore]allContacts][section];
+    NSString *title = dict[@"firstLetter"];
+    return title;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    NSMutableArray *resultArray = [NSMutableArray array];
+    for (NSDictionary *dict in [[ContactsStore sharedStore]allContacts]) {
+        NSString *title = dict[@"firstLetter"];
+        [resultArray addObject:title];
+    }
+    return resultArray;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -101,48 +176,32 @@
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController{
+    NSString *searchText = searchController.searchBar.text;
+    searchText = [searchText uppercaseString];
+    if([searchText isEqualToString:@""]){
+        return;
+    }
+    if(!self.searchResult){
+        self.searchResult = [[NSMutableArray alloc]init];
+    }
+    if([self.searchResult count]){
+        [self.searchResult removeAllObjects];
+    }
+    
+    NSPredicate *preBegin= [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@",searchText];
+    for(ContactItem *item in [[ContactsStore sharedStore] contactsArray] ){
+        NSLog(@"The search is %@,the name is %@,the pinyin is %@",searchText,item.name,item.pinyin);
+        // ldap、中文名、缩写、拼音匹配上都可以
+        if([preBegin evaluateWithObject:item.name] || [preBegin evaluateWithObject:item.pinyin] || [preBegin evaluateWithObject:item.abbName] || [preBegin evaluateWithObject:item.ldap]){
+            NSLog(@"Match %@",item.name);
+            [self.searchResult addObject:item];
+        }
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    }
+    [self.tableView reloadData];
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -9,9 +9,6 @@
 #import "ContactsStore.h"
 #import "ContactItem.h"
 @interface ContactsStore()
-//@property (nonatomic,strong) NSMutableArray *privateItems;
-@property (nonatomic,strong) NSMutableDictionary *privateDictionary;
-@property (nonatomic,strong) NSMutableArray *privateArray;
 @end
 @implementation ContactsStore
 
@@ -25,6 +22,8 @@
     return sharedStore;
 }
 
+
+
 - (instancetype)initPrivate{
 
     self= [super init];
@@ -32,6 +31,8 @@
         ContactItem *item1 = [[ContactItem alloc]init];
         item1.ldap = @"zhangsan";
         item1.name = @"张三";
+        item1.pinyin =  [ContactTools pinyinOfString:item1.name];
+        item1.firstchar = [ContactTools firstCharactor:item1.name];
         item1.email = @"zhangsan@gmail.com";
         item1.phone = @"13800138000";
         item1.manager = @"river";
@@ -40,11 +41,14 @@
         item1.popo = @"zhangsan@corp.netease.com";
         item1.qq = @"12121";
         item1.extNumber = @"89241";
-        item1.isStared = NO;
+        item1.isStared = YES;
+        item1.abbName = [ContactTools abbOfName:item1.name];
 
         ContactItem *item2 = [[ContactItem alloc]init];
         item2.ldap = @"lisi";
         item2.name = @"李四";
+        item2.pinyin =  [ContactTools pinyinOfString:item2.name];
+        item2.firstchar = [ContactTools firstCharactor:item2.name];
         item2.email = @"lisi@gmail.com";
         item2.phone = @"13800138000";
         item2.manager = @"sky";
@@ -53,38 +57,93 @@
         item2.popo = @"lisi@corp.netease.com";
         item2.qq = @"12122";
         item2.extNumber = @"89242";
-        item1.isStared = NO;
+        item2.isStared = NO;
+        item2.abbName = [ContactTools abbOfName:item2.name];
 
-        if(!self.privateDictionary){
-            self.privateDictionary = [[NSMutableDictionary alloc]init];
+        if(!self.allContactsDictionary){
+            self.allContactsDictionary = [[NSMutableDictionary alloc]init];
         }
-        [self.privateDictionary setObject:item1 forKey:item1.ldap];
-        [self.privateDictionary setObject:item2 forKey:item2.ldap];
+        [self.allContactsDictionary setObject:item1 forKey:item1.ldap];
+        [self.allContactsDictionary setObject:item2 forKey:item2.ldap];
     
-//        if(!self.privateItems){
-//            self.privateItems = [[NSMutableArray alloc]init];
-//        }
-//        [self.privateItems addObject:item1];
-//        [self.privateItems addObject:item2];
-//        NSLog(@"shareStore init,the array length is %d",[self.privateItems count]);
-        if(!self.privateArray){
-            self.privateArray = [[NSMutableArray alloc]init];
+        if(!self.allContactsArray){
+            self.allContactsArray = [[NSMutableArray alloc]init];
         }
-        NSArray *keys = [self.privateDictionary allKeys];
-        NSLog(@"the count of key is %d",[keys count]);
+        
+        if(!self.allStaredContactsArray){
+            self.allStaredContactsArray = [[NSMutableArray alloc]init];
+        }
+        NSArray *keys = [self.allContactsDictionary allKeys];
         for(NSString *key in keys){
-            [self.privateArray addObject:self.privateDictionary[key]];
+            ContactItem *item = self.allContactsDictionary[key];
+            [self.allContactsArray addObject:item];
+            if(item.isStared){
+                [self.allStaredContactsArray addObject:item];
+            }
         }
+        
+        // 将Contact转为grouped的Array
+        if(!self.groupedContactsArray){
+            self.groupedContactsArray = [[NSMutableArray alloc]init];
+        }
+
+        self.groupedContactsArray = [ContactsPinyin arrayWithPinYinFirstLetterFormat:self.allContactsArray];
+        
+
 
     }
     return self;
 }
 
-- (NSArray *)allItems{
+// 更新数组
+//- (void)reloadArray{
+//    if(!self.allContactsArray){
+//        self.allContactsArray = [[NSMutableArray alloc]init];
+//    }
+//    
+//    if(!self.allStaredContactsArray){
+//        self.allStaredContactsArray = [[NSMutableArray alloc]init];
+//    }
+//    NSArray *keys = [self.allContactsDictionary allKeys];
+//    for(NSString *key in keys){
+//        ContactItem *item = self.allContactsDictionary[key];
+//        [self.allContactsArray addObject:item];
+//        if(item.isStared){
+//            [self.allStaredContactsArray addObject:item];
+//        }
+//    }
+//    
+//    // 将Contact转为grouped的Array
+//    if(!self.groupedContactsArray){
+//        self.groupedContactsArray = [[NSMutableArray alloc]init];
+//    }
+//    
+//    self.groupedContactsArray = [ContactsPinyin arrayWithPinYinFirstLetterFormat:self.allContactsArray];
+//    
+//
+//}
 
-    return self.privateArray;
-//    return self.privateItems;
+- (void)renewStarContact:(ContactItem *)renewContact{
+    ContactItem * item = self.allContactsDictionary[renewContact.ldap];
+    item.isStared = renewContact.isStared;
+    if(item.isStared){
+        [self.allStaredContactsArray addObject:renewContact];
+        
+    }else{
+        NSArray *array = [[NSArray alloc]initWithObjects:renewContact, nil];
+        [self.allStaredContactsArray removeObjectsInArray:array];
+    }
 }
 
+- (NSArray *)allContacts{
+    return(self.groupedContactsArray);
+}
+
+- (NSArray *)contactsArray{
+    return(self.allContactsArray);
+}
+- (NSArray *)staredContacts{
+    return(self.allStaredContactsArray);
+}
 
 @end

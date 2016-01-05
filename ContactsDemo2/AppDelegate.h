@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ContactsTableViewController.h"
+#import "StaredContactsTableViewController.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

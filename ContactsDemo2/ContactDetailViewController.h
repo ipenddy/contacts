@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ContactItem.h"
+#import "ContactsStore.h"
 
 @interface ContactDetailViewController : UITableViewController
 

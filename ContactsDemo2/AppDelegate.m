@@ -27,14 +27,17 @@
     
     UITabBarItem * contactsTabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemContacts tag:0];
     contactsNav.tabBarItem = contactsTabBarItem;
-    contactsTableViewController.navigationItem.title = @"联系人";
+    contactsTableViewController.navigationItem.title = @"通讯录";
     
     
-    UITableViewController *favTableViewController = [[UITableViewController alloc]init];
-    UITabBarItem * favTabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:1];
-    favTableViewController.tabBarItem = favTabBarItem;
+    StaredContactsTableViewController *staredTableViewController = [[StaredContactsTableViewController alloc]init];
+    UINavigationController *staredNav = [[UINavigationController alloc]initWithRootViewController:staredTableViewController];
     
-    tabBarController.viewControllers = @[contactsNav,favTableViewController];
+    UITabBarItem * staredTabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:1];
+    staredTableViewController.tabBarItem = staredTabBarItem;
+    staredTableViewController.navigationItem.title = @"收藏";
+    
+    tabBarController.viewControllers = @[contactsNav,staredNav];
     
     
     self.window.rootViewController = tabBarController;
@@ -42,7 +45,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-
     return YES;
 }
 

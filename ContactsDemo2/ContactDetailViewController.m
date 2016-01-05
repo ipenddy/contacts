@@ -97,6 +97,7 @@
 - (void)starContact{
     self.item.isStared = !self.item.isStared;
     [self renewToolbar];
+    [[ContactsStore sharedStore] renewStarContact:self.item];
     if(self.item.isStared){
         [[[[iToast makeText:NSLocalizedString(@"  收藏成功！ ", @"")]
       setGravity:iToastGravityBottom] setDuration:iToastDurationShort] show];
@@ -146,6 +147,7 @@
     self.navigationItem.title = self.item.name;
     self.navigationController.toolbarHidden = NO;
     [self renewToolbar];
+    [self.tableView reloadData];
     
 }
 
