@@ -13,7 +13,8 @@
 #import "ContactTools.h"
 #import "ContactDetailViewController.h"
 
-@interface ContactsTableViewController () <UISearchBarDelegate, UISearchResultsUpdating>
+
+@interface ContactsTableViewController () <UISearchBarDelegate, UISearchResultsUpdating,RefreshDataDelegate>
 
 @property (nonatomic,strong) UISearchController *searchController;
 
@@ -26,7 +27,8 @@
 - (instancetype) init{
     self = [super initWithStyle:UITableViewStylePlain];
     //不显示多余的空行
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [ContactsStore sharedStore].delegate = self;
     return self;
 }
 
@@ -39,7 +41,11 @@
     UINib *nib = [UINib nibWithNibName:@"ContactItemCell" bundle:nil];
     // 通过UINib对象注册相应的NIB文件
     [self.tableView registerNib:nib forCellReuseIdentifier:@"ContactItemCell"];
-
+    
+    // 声明接收UpdateContact通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:@"UpdateContact" object:nil];
+    
+    
 }
 
 
@@ -55,8 +61,12 @@
     // 把searchBar放到tableview上方
     self.tableView.tableHeaderView = _searchController.searchBar;
     self.definesPresentationContext = YES;
-
     
+    
+}
+
+- (void)refreshData{
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,7 +90,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if(self.searchController.active){
-        NSLog(@"enter section");
         return 1;
     }else{
        return [[[ContactsStore sharedStore] allContacts] count];
@@ -104,18 +113,17 @@
         cell.avatarImage.image = item.avatar;
     }else{
 
-    NSDictionary *dict =[[ContactsStore sharedStore] allContacts][indexPath.section];
-    NSMutableArray *array = dict[@"content"];
-    ContactItem *item = array[indexPath.row];
+        NSDictionary *dict =[[ContactsStore sharedStore] allContacts][indexPath.section];
+        NSMutableArray *array = dict[@"content"];
+        ContactItem *item = array[indexPath.row];
     
     
-    cell.nameLabel.text = item.name;
-    cell.phoneLabel.text = item.phone;
-    [ContactTools roundImageView:cell.avatarImage];
-    cell.avatarImage.image = item.avatar;
+        cell.nameLabel.text = item.name;
+        cell.phoneLabel.text = item.phone;
+        [ContactTools roundImageView:cell.avatarImage];
+        cell.avatarImage.image = item.avatar;
 
 
-      
   }
     return cell;
 }
@@ -155,19 +163,32 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSDictionary *dict = [[ContactsStore sharedStore]allContacts][section];
-    NSString *title = dict[@"firstLetter"];
-    return title;
+    if(self.searchController.active){
+        return nil;
+    }else{
+        NSDictionary *dict = [[ContactsStore sharedStore]allContacts][section];
+        NSString *title = dict[@"firstLetter"];
+        NSArray *array = dict[@"content"];
+        if([array count] != 0){
+            return title;
+        }else{
+            return nil;
+        }
+    }
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
+    if(self.searchController.active){
+        return nil;
+    }else{
     NSMutableArray *resultArray = [NSMutableArray array];
     for (NSDictionary *dict in [[ContactsStore sharedStore]allContacts]) {
         NSString *title = dict[@"firstLetter"];
         [resultArray addObject:title];
     }
     return resultArray;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -180,9 +201,7 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController{
     NSString *searchText = searchController.searchBar.text;
     searchText = [searchText uppercaseString];
-    if([searchText isEqualToString:@""]){
-        return;
-    }
+
     if(!self.searchResult){
         self.searchResult = [[NSMutableArray alloc]init];
     }
@@ -190,9 +209,18 @@
         [self.searchResult removeAllObjects];
     }
     
+    if([searchText isEqualToString:@""]){
+        for(ContactItem *item in [[ContactsStore sharedStore] contactsArray] ){
+            [self.searchResult addObject:item];
+        }
+        [self.tableView reloadData];
+        return;
+    }
+    
+
+    
     NSPredicate *preBegin= [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@",searchText];
     for(ContactItem *item in [[ContactsStore sharedStore] contactsArray] ){
-        NSLog(@"The search is %@,the name is %@,the pinyin is %@",searchText,item.name,item.pinyin);
         // ldap、中文名、缩写、拼音匹配上都可以
         if([preBegin evaluateWithObject:item.name] || [preBegin evaluateWithObject:item.pinyin] || [preBegin evaluateWithObject:item.abbName] || [preBegin evaluateWithObject:item.ldap]){
             NSLog(@"Match %@",item.name);
@@ -202,6 +230,12 @@
     }
     [self.tableView reloadData];
 }
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    self.searchController.active = FALSE;
+    [self.tableView reloadData];
+}
+
 
 
 @end

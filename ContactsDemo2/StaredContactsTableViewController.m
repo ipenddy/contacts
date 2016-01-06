@@ -8,7 +8,7 @@
 
 #import "StaredContactsTableViewController.h"
 
-@interface StaredContactsTableViewController ()
+@interface StaredContactsTableViewController () <RefreshDataDelegate>
 
 @end
 
@@ -25,6 +25,9 @@
     return [self init];
 }
 
+- (void)refreshData{
+    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

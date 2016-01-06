@@ -274,5 +274,42 @@ static char firstLetterArray[HANZI_COUNT] =
     return resultArray;
 }
 
+
++ (void)initPinYinArray:(NSMutableArray *)array{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    for (int i = 'A'; i <= 'Z'; i++) {
+        [dict setObject:[NSMutableArray array] forKey:[NSString stringWithUTF8String:(const char *)&i]];
+        NSString *firstLetter = [NSString stringWithUTF8String:(const char *)&i];
+        NSMutableArray *itemArray = dict[firstLetter];
+        NSDictionary *resultDict = @{@"firstLetter": firstLetter,@"content": itemArray};
+        [array addObject:resultDict];
+    }
+    [dict setObject:[NSMutableArray array] forKey:@"#"];
+    NSMutableArray *itemArray = dict[@"#"];
+    NSDictionary *resultDict = @{@"firstLetter": @"#",@"content": itemArray};
+    [array addObject:resultDict];
+    
+
+    
+}
++ (void)addObject:(ContactItem *)contact InPinyinArray:(NSMutableArray *)contactsArray{    
+    for(NSDictionary *dict in contactsArray){
+        if([dict[@"firstLetter"] isEqualToString:contact.firstchar]){
+            NSMutableArray *itemArray = dict[@"content"];
+            [itemArray addObject:contact];
+            
+            [itemArray sortUsingComparator:^NSComparisonResult(ContactItem *obj1, ContactItem *obj2) {
+                NSString *word1 = obj1.pinyin;
+                NSString *word2 = obj2.pinyin;
+                return [word1 localizedCompare:word2];
+            }];
+            
+        }
+    }
+    return;
+}
+
+
 @end
 

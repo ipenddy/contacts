@@ -14,4 +14,6 @@
 @interface ContactsPinyin :NSObject
 
 + (NSArray *)arrayWithPinYinFirstLetterFormat:(NSArray *)items;
++ (void)initPinYinArray:(NSMutableArray *)array;
++ (void)addObject:(ContactItem *)contact InPinyinArray:(NSMutableArray *)contactsArray;
 @end

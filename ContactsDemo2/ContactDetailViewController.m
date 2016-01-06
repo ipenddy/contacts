@@ -75,17 +75,13 @@
         self.hidesBottomBarWhenPushed = YES;
 
         // 初始化Toolbar的图标
-        CGSize iconSize = CGSizeMake(50.0, 50.0);
         self.dialImage = [UIImage imageNamed:(@"dial.png")];
-        self.dialImage = [ContactTools OriginImage:self.dialImage scaleToSize:iconSize];
         self.dialImage = [self.dialImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         
         self.unStaredImage = [UIImage imageNamed:(@"unstared.png")];
-        self.unStaredImage = [ContactTools OriginImage:self.unStaredImage scaleToSize:iconSize];
         self.unStaredImage = [self.unStaredImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         
         self.staredImage = [UIImage imageNamed:(@"stared.png")];
-        self.staredImage = [ContactTools OriginImage:self.staredImage scaleToSize:iconSize];
         self.staredImage = [self.staredImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         
         self.flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
