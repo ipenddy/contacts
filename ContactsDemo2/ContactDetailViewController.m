@@ -138,13 +138,23 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    
     [super viewWillAppear:animated];
+
+    NSArray *vcs = self.navigationController.viewControllers;
+    // 如果是被present出来的
+    if(vcs.count <= 1){
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:self action:@selector(closeSelf)];
+    }
     self.navigationItem.title = self.item.name;
     self.navigationController.toolbarHidden = NO;
     [self renewToolbar];
     [self.tableView reloadData];
     
+    
+}
+
+- (void)closeSelf{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

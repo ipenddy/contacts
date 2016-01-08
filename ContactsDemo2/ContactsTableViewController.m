@@ -77,6 +77,7 @@
         ContactItem *contact = obj;
         attributeSet.title = contact.name;
         attributeSet.phoneNumbers = [NSArray arrayWithObjects:contact.phone, nil];
+        attributeSet.contentDescription = contact.phone;
         attributeSet.supportsPhoneCall = [NSNumber numberWithInt:1];
         attributeSet.keywords = [NSArray arrayWithObjects:contact.name,contact.ldap,contact.abbName,contact.pinyin,nil];
         attributeSet.thumbnailData = UIImagePNGRepresentation(contact.avatar);

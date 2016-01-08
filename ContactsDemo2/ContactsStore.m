@@ -100,7 +100,7 @@
             }
             [ContactsPinyin addObject:item InPinyinArray:self.groupedContactsArray];
             i++;
-            if((i % 20) == 0){
+            if((i % 50) == 0){
 //                NSLog(@"refresh data!");
                 // 必须在主线程更新UI
                 dispatch_async(dispatch_get_main_queue(),^{
