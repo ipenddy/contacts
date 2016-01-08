@@ -16,4 +16,5 @@
 + (NSString *)abbOfName:(NSString *)aString;
 + (void)roundImageView:(UIImageView *)imageView;
 + (UIImage *)OriginImage:(UIImage *)image scaleToSize:(CGSize)size;
++ (UIViewController *)getCurrentVC;
 @end

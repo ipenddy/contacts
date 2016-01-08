@@ -12,6 +12,7 @@
 #import "ContactItemCell.h"
 #import "ContactTools.h"
 #import "ContactDetailViewController.h"
+#import <CoreSpotlight/CoreSpotlight.h>
 
 
 @interface ContactsTableViewController () <UISearchBarDelegate, UISearchResultsUpdating,RefreshDataDelegate>
@@ -67,6 +68,29 @@
 
 - (void)refreshData{
     [self.tableView reloadData];
+}
+
+- (void)refreshSpotlight{
+    NSMutableArray *searchableItems = [NSMutableArray new];
+    [[ContactsStore sharedStore].allContactsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CSSearchableItemAttributeSet *attributeSet = [[CSSearchableItemAttributeSet alloc]initWithItemContentType:@"views"];
+        ContactItem *contact = obj;
+        attributeSet.title = contact.name;
+        attributeSet.phoneNumbers = [NSArray arrayWithObjects:contact.phone, nil];
+        attributeSet.supportsPhoneCall = [NSNumber numberWithInt:1];
+        attributeSet.keywords = [NSArray arrayWithObjects:contact.name,contact.ldap,contact.abbName,contact.pinyin,nil];
+        attributeSet.thumbnailData = UIImagePNGRepresentation(contact.avatar);
+        CSSearchableItem *item = [[CSSearchableItem alloc]initWithUniqueIdentifier:contact.ldap domainIdentifier:@"com.penddy.ContactsDemo2" attributeSet:attributeSet];
+        [searchableItems addObject:item];
+        
+    }];
+    [[CSSearchableIndex defaultSearchableIndex]indexSearchableItems:searchableItems completionHandler:^(NSError * _Nullable error) {
+        if(error){
+            NSLog(@"Search Item faild to be indexed");
+        }else{
+            NSLog(@"Search item indexed");
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -8,6 +8,8 @@
 
 #import "ContactsStore.h"
 #import "ContactItem.h"
+
+
 @interface ContactsStore()
 @end
 @implementation ContactsStore
@@ -117,6 +119,7 @@
                 // 必须在主线程更新UI
                 dispatch_async(dispatch_get_main_queue(),^{
                     [self.delegate refreshData];
+                    [self.delegate refreshSpotlight];
                 }); // 主线程更新UI完毕
 
             }

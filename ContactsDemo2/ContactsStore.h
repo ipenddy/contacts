@@ -14,7 +14,9 @@
 
 - (void)refreshData;
 
+- (void)refreshSpotlight;
 @end
+
 
 @interface ContactsStore : NSObject
 
